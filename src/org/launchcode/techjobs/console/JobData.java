@@ -71,10 +71,12 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        value = value.toLowerCase();
 
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
+            aValue = aValue.toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -84,6 +86,43 @@ public class JobData {
         return jobs;
     }
 
+    /**
+     * Returns results of searching the jobs data using inclusion
+     * of the search term.
+     *
+     * This search checks all columns and disregards duplicates.
+     *
+     * @param value  Value of the field to search for
+     * @return  List of all jobs matching the criteria, excluding dupes.
+     */
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        // Load data if not already loaded.
+        loadData();
+        // Instantiate and initialize a new ArrayList called jobs.
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        // Go ahead and make that value you took in all lowercase. We'll need that
+        // so we can check entries without worrying about case.
+        value = value.toLowerCase();
+        // Iterate over each hashmap in allJobs
+        for (HashMap<String, String> row: allJobs) {
+            // For each key in each row hashmap
+            for (String column : row.keySet()) {
+                // Get the value associated with that key and make it all lowercase
+                String aValue = row.get(column);
+                aValue = aValue.toLowerCase();
+                // If you find the value in the aValue string AND jobs doesn't have the row already
+                if (aValue.contains(value) && !jobs.contains(row)) {
+                    // Go ahead and add the row
+                    jobs.add(row);
+                }
+
+            }
+
+        }
+
+        return jobs;
+    }
     /**
      * Read in data from a CSV file and store it in a list
      */

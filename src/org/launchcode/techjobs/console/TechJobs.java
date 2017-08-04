@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -61,7 +62,7 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -111,6 +112,45 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        /*
+        Example of what the final output should look like per entry:
+
+        *****
+        position type: Data Scientist / Business Intelligence
+        name: Sr. IT Analyst (Data/BI)
+        employer: Bull Moose Industries
+        location: Saint Louis
+        core competency: Statistical Analysis
+        *****
+
+         */
+
+        /*
+        The initial for loop goes from 0 to a value one less than the length
+        of the size of someJobs; it will iterate over every entry.
+
+        Each time we execute the outer for loop, create the hashmap
+        that has the data we pulled from the hashmap in the arraylist.
+
+        Print the leading ***** to separate listings.
+
+        For each key-value pair in the hashmap, print the key and the value.
+
+        In the outer for loop but outside the inner for loop, print
+        the concluding ***** and a newline to separate jobs.
+         */
+
+        if (someJobs.size() == 0) {
+            System.out.println("There are no current jobs available. Try back later!");
+        } else {
+
+            for (HashMap<String, String> job : someJobs) {
+                System.out.println("*****");
+                for (Map.Entry<String, String> job_cat : job.entrySet()) {
+                    System.out.println(job_cat.getKey() + ": " + job_cat.getValue());
+                }
+                System.out.println("*****\n");
+            }
+        }
     }
 }
